@@ -14,7 +14,7 @@ A full-stack monorepo built with [Turborepo](https://turbo.build/repo), featurin
 | Styling  | Tailwind CSS v4, shadcn/ui                    |
 | State    | TanStack Query, Zustand                       |
 | i18n     | i18next, react-i18next                        |
-| DevOps   | Docker, Docker Compose, GitHub Actions CI     |
+| CI       | GitHub Actions                                |
 
 ---
 
@@ -25,36 +25,20 @@ wyxan/
 ├── apps/
 │   ├── api/                # NestJS backend (DDD)
 │   │   └── src/
-│   │       ├── modules/
-│   │       │   └── user/
-│   │       │       ├── domain/
-│   │       │       ├── infrastructure/
-│   │       │       ├── presentation/
-│   │       │       └── services/
+│   │       ├── modules/    # person, site, visit, browse
+│   │       │   └── <name>/ # domain, infrastructure, presentation, services
 │   │       ├── common/
-│   │       ├── database/
 │   │       ├── middleware/
-│   │       └── types/
-│   └── web/                # Next.js frontend (FDA)
+│   │       └── seed/       # deterministic seed data and history
+│   └── web/                # Next.js frontend (feature-driven)
 │       ├── app/            # Next.js App Router
-│       ├── features/       # Feature modules
-│       │   └── auth/
-│       │       ├── api/
-│       │       ├── components/
-│       │       └── types/
+│       ├── features/
+│       │   └── browser/    # api, hooks, components
 │       └── shared/         # Cross-feature shared code
-│           ├── components/
-│           ├── hooks/
-│           ├── lib/
-│           ├── providers/
-│           ├── stores/
-│           └── types/
 ├── packages/
-│   ├── dtos/               # Shared Zod DTOs
+│   ├── dtos/               # Shared Zod DTOs and address normaliser
 │   ├── eslint-config/      # Shared ESLint config
 │   └── typescript-config/  # Shared TypeScript config
-├── Dockerfile              # Multi-stage Docker build for the API
-├── compose.yaml            # Docker Compose for production API & MongoDB
 └── turbo.json
 ```
 
@@ -70,7 +54,7 @@ Zod schemas live in `packages/dtos/src` and are consumed by both the NestJS back
 
 - **Node.js** >= 24
 - **pnpm** >= 11.10.0
-- **Docker** & **Docker Compose** (for containerised services)
+- **MongoDB** running locally or reachable by URL
 
 ---
 
@@ -85,11 +69,19 @@ See the example files for all required variables:
 
 ## Getting Started
 
+Needs Node >= 24, pnpm, and a running MongoDB.
+
 ```bash
 # 1. Install dependencies
 pnpm install
 
-# 2. Start all apps in watch mode
+# 2. Create .env from the example and fill in DATABASE_URL
+cp .env.example .env
+
+# 3. Seed the web
+pnpm --filter api seed
+
+# 4. Start the API (http://localhost:5000/api) and the web app (http://localhost:3000)
 pnpm dev
 ```
 
@@ -119,23 +111,6 @@ The following scripts are defined in the root [`package.json`](package.json):
 | `pnpm format`     | `prettier --check "**/*.{ts,tsx,json,md}"` | Check formatting with Prettier                   |
 | `pnpm format:fix` | `prettier --write "**/*.{ts,tsx,json,md}"` | Fix formatting with Prettier                     |
 | `pnpm typecheck`  | `turbo run typecheck`                      | Run TypeScript type checks across all workspaces |
-
----
-
-## Docker & Compose
-
-Run the containerised API along with MongoDB and persistent volume storage:
-
-```bash
-# Start all containers in detached mode
-docker compose up -d
-
-# View service logs
-docker compose logs -f
-
-# Stop containers
-docker compose down
-```
 
 ---
 

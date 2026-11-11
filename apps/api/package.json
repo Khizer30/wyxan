@@ -10,7 +10,7 @@
     "build": "nest build",
     "debug": "nest start --debug --watch",
     "dev": "nest start --watch",
-    "start": "node dist/src/main"
+    "start": "node dist/main"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
