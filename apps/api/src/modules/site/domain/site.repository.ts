@@ -16,5 +16,6 @@ export abstract class SiteRepository {
 
 export abstract class SiteRevisionRepository {
   abstract findById(id: string): Promise<SiteRevisionEntity | null>;
+  abstract findByIds(ids: string[]): Promise<SiteRevisionEntity[]>;
   abstract findLatestVersion(siteId: string): Promise<number>;
 }
