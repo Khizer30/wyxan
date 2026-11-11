@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "exports": {
-    "./user": {
-      "types": "./dist/user/index.d.ts",
-      "default": "./dist/user/index.js"
+    "./address": {
+      "types": "./dist/address/index.d.ts",
+      "default": "./dist/address/index.js"
     }
   },
   "scripts": {
