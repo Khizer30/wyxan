@@ -148,6 +148,7 @@ function walk(person: string, startsAt: number, steps: Step[], world: World) {
   return { visits, session, endedAt: new Date(clock) };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function upsertAll<T extends { _id: string }>(model: Model<any>, docs: T[]) {
   if (docs.length === 0) {
     return;
