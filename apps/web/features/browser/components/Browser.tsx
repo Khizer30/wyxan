@@ -13,8 +13,6 @@ import { useBrowser } from "@features/browser/hooks/useBrowser";
 import { usePeople } from "@features/browser/hooks/usePeople";
 import type { Transition } from "@features/browser/types/browser.types";
 import { Button } from "@shared/components/ui/button";
-import { cn } from "@shared/lib/utils";
-import { ArrowLeftIcon, ArrowRightIcon, ClockIcon, SquarePenIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export function Browser() {
@@ -51,52 +49,36 @@ export function Browser() {
 
   return (
     <div className="flex h-dvh flex-col bg-background">
-      <header className="shrink-0 border-b border-border bg-card">
-        <div className="flex flex-wrap items-center gap-2 px-3 py-2">
-          <Button variant="ghost" size="icon" onClick={() => act({ type: "back" })} disabled={!canGoBack} aria-label="Back" title="Back (Alt+←)">
-            <ArrowLeftIcon className="size-4" />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => act({ type: "forward" })} disabled={!canGoForward} aria-label="Forward" title="Forward (Alt+→)">
-            <ArrowRightIcon className="size-4" />
-          </Button>
+      <header className="flex shrink-0 flex-wrap items-center gap-2 border-b border-border p-2">
+        <Button onClick={() => act({ type: "back" })} disabled={!canGoBack} aria-label="Back" title="Alt+Left">
+          Back
+        </Button>
+        <Button onClick={() => act({ type: "forward" })} disabled={!canGoForward} aria-label="Forward" title="Alt+Right">
+          Forward
+        </Button>
 
-          <AddressBar key={`a-${barKey}`} address={body?.kind === "page" ? body.address : ""} disabled={busy} onGo={(input) => go(input, "typed")} />
-          <SearchBox
-            key={`s-${barKey}`}
-            query={body?.kind === "search" ? body.query : ""}
-            disabled={busy}
-            onSearch={(query) => act({ type: "search", query })}
-          />
+        <AddressBar key={`a-${barKey}`} address={body?.kind === "page" ? body.address : ""} disabled={busy} onGo={(input) => go(input, "typed")} />
+        <SearchBox key={`s-${barKey}`} query={body?.kind === "search" ? body.query : ""} disabled={busy} onSearch={(query) => act({ type: "search", query })} />
 
-          <Button
-            variant={historyOpen ? "outline" : "ghost"}
-            size="icon"
-            onClick={() => setHistoryOpen((open) => !open)}
-            aria-label="History"
-            aria-pressed={historyOpen}
-            title="History"
-          >
-            <ClockIcon className="size-4" />
-          </Button>
-          <Button variant="ghost" onClick={() => setPublishAt("")} disabled={!person}>
-            <SquarePenIcon className="size-4" />
-            <span className="hidden sm:inline">Publish</span>
-          </Button>
-          <PersonSelect people={people} person={person} onChange={setPersonId} />
-        </div>
-        <div className={cn("h-0.5 bg-primary/60 transition-opacity", isActing ? "animate-pulse opacity-100" : "opacity-0")} />
+        <Button onClick={() => setHistoryOpen((open) => !open)} aria-label="History" aria-pressed={historyOpen} className={historyOpen ? "bg-muted" : ""}>
+          History
+        </Button>
+        <Button onClick={() => setPublishAt("")} disabled={!person}>
+          Publish
+        </Button>
+        <PersonSelect people={people} person={person} onChange={setPersonId} />
       </header>
 
       {error && (
-        <p role="alert" className="shrink-0 border-b border-destructive/30 bg-destructive/10 px-4 py-2 text-sm text-destructive">
+        <p role="alert" className="shrink-0 border-b border-border px-3 py-1.5 text-sm text-destructive">
           {getErrorMessage(error)}
         </p>
       )}
 
       <div className="flex min-h-0 flex-1">
         <main className="min-w-0 flex-1">
-          {peopleError && <p className="p-8 text-center text-muted-foreground">Could not reach the server. Is the API running?</p>}
-          {!peopleError && loadingPeople && <p className="p-8 text-center text-muted-foreground">Loading…</p>}
+          {peopleError && <p className="p-8 text-sm text-muted-foreground">Could not reach the server. Is the API running?</p>}
+          {!peopleError && loadingPeople && <p className="p-8 text-sm text-muted-foreground">Loading…</p>}
           {!peopleError && person && body === null && !isLoading && <EmptyView name={person.name} />}
 
           {body?.kind === "page" &&

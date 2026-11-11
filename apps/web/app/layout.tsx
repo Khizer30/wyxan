@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Children) {
   return (
     <html lang="en" suppressHydrationWarning className={cn("h-full", "antialiased", "font-sans")}>
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false} disableTransitionOnChange>
           <I18nProvider>
             <QueryProvider>{children}</QueryProvider>
           </I18nProvider>

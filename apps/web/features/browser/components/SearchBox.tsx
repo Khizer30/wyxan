@@ -1,6 +1,5 @@
 "use client";
 import { Input } from "@shared/components/ui/input";
-import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 
 interface SearchBoxProps {
@@ -14,7 +13,7 @@ export function SearchBox({ query, disabled, onSearch }: SearchBoxProps) {
 
   return (
     <form
-      className="relative w-full sm:w-56"
+      className="w-48"
       onSubmit={(event) => {
         event.preventDefault();
         if (draft.trim()) {
@@ -22,15 +21,7 @@ export function SearchBox({ query, disabled, onSearch }: SearchBoxProps) {
         }
       }}
     >
-      <SearchIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
-        value={draft}
-        onChange={(event) => setDraft(event.target.value)}
-        disabled={disabled}
-        placeholder="Search every page"
-        aria-label="Search"
-        className="pl-8"
-      />
+      <Input value={draft} onChange={(event) => setDraft(event.target.value)} disabled={disabled} placeholder="Search" aria-label="Search" />
     </form>
   );
 }

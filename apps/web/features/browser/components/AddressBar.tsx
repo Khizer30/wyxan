@@ -26,7 +26,7 @@ export function AddressBar({ address, disabled, onGo }: AddressBarProps) {
         onChange={(event) => setDraft(event.target.value)}
         onFocus={(event) => event.target.select()}
         disabled={disabled}
-        placeholder="Type an address, like tidepool.io"
+        placeholder="Address"
         aria-label="Address"
         spellCheck={false}
         autoCapitalize="off"

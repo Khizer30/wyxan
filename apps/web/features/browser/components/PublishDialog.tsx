@@ -7,8 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 const TEMPLATE = `<h1>My page</h1>
-<p>Write something here. Headings, paragraphs, lists, tables and links to other addresses all work.</p>
-<p>Link to another site like this: <a href="tidepool.io">tidepool.io</a>.</p>`;
+<p>Write something here. Link to another site like this: <a href="tidepool.io">tidepool.io</a>.</p>`;
 
 interface PublishDialogProps {
   person: Person;
@@ -32,27 +31,22 @@ export function PublishDialog({ person, initialAddress, onClose, onPublished }: 
       role="dialog"
       aria-modal="true"
       aria-labelledby="publish-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 p-4 pt-16"
       onKeyDown={(event) => event.key === "Escape" && onClose()}
     >
       <form
-        className="flex max-h-full w-full max-w-xl flex-col gap-4 overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-xl"
+        className="w-full max-w-lg space-y-3 border border-border bg-background p-4 text-sm"
         onSubmit={(event) => {
           event.preventDefault();
           publish.mutate();
         }}
       >
-        <div>
-          <h2 id="publish-title" className="text-lg font-semibold">
-            Publish a site
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Publishing as <span className="font-medium text-foreground">{person.name}</span>. Publishing at an address you already own adds a new version.
-          </p>
-        </div>
+        <h2 id="publish-title" className="text-base font-semibold">
+          Publish a site as {person.name}
+        </h2>
 
-        <label className="space-y-1.5 text-sm font-medium">
-          Address
+        <label className="block space-y-1">
+          <span>Address</span>
           <Input
             value={address}
             onChange={(event) => setAddress(event.target.value)}
@@ -64,39 +58,34 @@ export function PublishDialog({ person, initialAddress, onClose, onPublished }: 
           />
         </label>
 
-        <label className="space-y-1.5 text-sm font-medium">
-          Title
-          <Input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="What is this page called?" required maxLength={200} />
+        <label className="block space-y-1">
+          <span>Title</span>
+          <Input value={title} onChange={(event) => setTitle(event.target.value)} required maxLength={200} />
         </label>
 
-        <label className="space-y-1.5 text-sm font-medium">
-          HTML
+        <label className="block space-y-1">
+          <span>HTML</span>
           <textarea
             value={html}
             onChange={(event) => setHtml(event.target.value)}
-            rows={10}
+            rows={9}
             required
             spellCheck={false}
-            className="w-full rounded-md border border-input bg-background p-3 font-mono text-xs leading-relaxed outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="w-full rounded-sm border border-border bg-background p-2 font-mono text-xs outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         </label>
 
-        <p className="text-xs text-muted-foreground">
-          Scripts, forms, images, embedded frames, style blocks and event handlers are removed when you publish. Links that are not addresses are removed too.
-          Basic inline colours and alignment are kept.
-        </p>
+        <p className="text-xs text-muted-foreground">Scripts, forms, images, frames and event handlers are removed when you publish.</p>
 
         {publish.error && (
-          <p role="alert" className="text-sm text-destructive">
+          <p role="alert" className="text-destructive">
             {getErrorMessage(publish.error)}
           </p>
         )}
 
         <div className="flex justify-end gap-2">
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" disabled={publish.isPending}>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button type="submit" primary disabled={publish.isPending}>
             {publish.isPending ? "Publishing…" : "Publish"}
           </Button>
         </div>

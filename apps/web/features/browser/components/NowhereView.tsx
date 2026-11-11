@@ -1,23 +1,19 @@
-import { Button } from "@shared/components/ui/button";
-import { CompassIcon } from "lucide-react";
-
 interface NowhereViewProps {
   address: string;
   onPublish: (address: string) => void;
 }
 
+/** An address that leads nowhere is an ordinary result, not an error: it is recorded and sits in history like any page. */
 export function NowhereView({ address, onPublish }: NowhereViewProps) {
   return (
-    <div className="mx-auto flex h-full max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
-      <CompassIcon className="size-10 text-muted-foreground" strokeWidth={1.5} />
-      <h1 className="text-2xl font-semibold tracking-tight">Nowhere</h1>
+    <div className="max-w-xl space-y-2 p-8 text-sm">
+      <h1 className="text-lg font-semibold">Nowhere</h1>
       <p className="text-muted-foreground">
-        No site lives at <span className="font-mono text-foreground break-all">{address || "that address"}</span>. It may never have existed, or it may not have
-        been published yet.
+        No site lives at <span className="font-mono break-all text-foreground">{address || "that address"}</span>.
       </p>
-      <Button variant="outline" onClick={() => onPublish(address)}>
+      <button type="button" onClick={() => onPublish(address)} className="text-blue-700 underline">
         Publish something here
-      </Button>
+      </button>
     </div>
   );
 }
