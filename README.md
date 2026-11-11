@@ -2,6 +2,28 @@
 
 A full-stack monorepo built with [Turborepo](https://turbo.build/repo), featuring a NestJS API and a Next.js web app with shared DTOs.
 
+---
+
+## Getting Started
+
+Needs Node >= 24, pnpm, and a running MongoDB.
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Create .env from the example and fill in DATABASE_URL
+cp .env.example .env
+
+# 3. Seed the web
+pnpm --filter api seed
+
+# 4. Start the API (http://localhost:5000/api) and the web app (http://localhost:3000)
+pnpm dev
+```
+
+---
+
 ## Stack
 
 | Layer    | Technology                                    |
@@ -55,35 +77,6 @@ Zod schemas live in `packages/dtos/src` and are consumed by both the NestJS back
 - **Node.js** >= 24
 - **pnpm** >= 11.10.0
 - **MongoDB** running locally or reachable by URL
-
----
-
-## Environment Variables
-
-See the example files for all required variables:
-
-- [`apps/api/.env.example`](apps/api/.env.example)
-- [`apps/web/.env.example`](apps/web/.env.example)
-
----
-
-## Getting Started
-
-Needs Node >= 24, pnpm, and a running MongoDB.
-
-```bash
-# 1. Install dependencies
-pnpm install
-
-# 2. Create .env from the example and fill in DATABASE_URL
-cp .env.example .env
-
-# 3. Seed the web
-pnpm --filter api seed
-
-# 4. Start the API (http://localhost:5000/api) and the web app (http://localhost:3000)
-pnpm dev
-```
 
 ---
 
