@@ -7,8 +7,8 @@ import "./globals.css";
 import { cn } from "shared/lib/utils";
 
 export const metadata: Metadata = {
-  title: "",
-  description: ""
+  title: "The Small Web",
+  description: "A browser for a small web of one-page sites."
 };
 
 export default function RootLayout({ children }: Children) {
