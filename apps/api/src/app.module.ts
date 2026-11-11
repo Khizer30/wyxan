@@ -1,4 +1,7 @@
-import { UserModule } from "@modules/user/user.module";
+import { BrowseModule } from "@modules/browse/browse.module";
+import { PersonModule } from "@modules/person/person.module";
+import { SiteModule } from "@modules/site/site.module";
+import { VisitModule } from "@modules/visit/visit.module";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
@@ -38,7 +41,10 @@ import { LoggerModule } from "nestjs-pino";
       })
     }),
     ScheduleModule.forRoot({}),
-    UserModule
+    PersonModule,
+    SiteModule,
+    VisitModule,
+    BrowseModule
   ],
   providers: [
     {
