@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  Validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install Root Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint Check
+        run: pnpm lint
+
+      - name: Format Check
+        run: pnpm format
+
+      - name: Build Check
+        run: pnpm build
+
+      - name: TypeScript Check
+        run: pnpm typecheck
