@@ -7,6 +7,22 @@
     "./address": {
       "types": "./dist/address/index.d.ts",
       "default": "./dist/address/index.js"
+    },
+    "./browse": {
+      "types": "./dist/browse/index.d.ts",
+      "default": "./dist/browse/index.js"
+    },
+    "./site": {
+      "types": "./dist/site/index.d.ts",
+      "default": "./dist/site/index.js"
+    },
+    "./history": {
+      "types": "./dist/history/index.d.ts",
+      "default": "./dist/history/index.js"
+    },
+    "./person": {
+      "types": "./dist/person/index.d.ts",
+      "default": "./dist/person/index.js"
     }
   },
   "scripts": {

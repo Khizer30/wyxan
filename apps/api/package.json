@@ -6,6 +6,7 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
+    "seed": "ts-node -r tsconfig-paths/register src/seed/seed.ts",
     "build": "nest build",
     "debug": "nest start --debug --watch",
     "dev": "nest start --watch",
